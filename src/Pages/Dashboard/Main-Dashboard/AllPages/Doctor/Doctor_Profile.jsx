@@ -217,13 +217,12 @@ const Doctor_Profile = () => {
                 </div>
                 <div className="singleitemdiv">
                   <FaRegHospital className="singledivicons" />
-                  <p>Apollo hospitals</p>
+                  <p>TATA MAIN HOSPITAL</p>
                 </div>
                 <div className="singleitemdiv">
                   <FaMapMarkedAlt className="singledivicons" />
                   <p>
-                    Sri Aurobindo Marg, Ansari Nagar, Ansari Nagar East, New
-                    Delhi.
+                    Tata Main Hospital Rd , Dhatkidih , Jamshedpur, Jharkhand-831001
                   </p>
                 </div>
               </div>
