@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Radio } from "antd";
 import banner from "../../../img/banner.png";
 import admin from "../../../img/admin.jpg";
-import "./DLogin.css";
+import "./DSignup.css";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
 const notify = (text) => toast(text);
 
-const DLogin = () => {
+const DSignup = () => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -33,6 +33,8 @@ const DLogin = () => {
   const [formvalue, setFormvalue] = useState({
     ID: "",
     password: "",
+    name: "",
+    finalPass: ""
   });
   const dispatch = useDispatch();
 
@@ -51,14 +53,15 @@ const DLogin = () => {
         };
         dispatch(NurseLogin(data)).then((res) => {
           if (res.message === "Successful") {
-            notify("Login Successful");
+            notify("User already exists, Please Login");
             setLoading(false);
-            return navigate("/dashboard");
+            // return navigate("/dashboard");
+            return;
           }
           if (res.message === "Wrong credentials") {
             setLoading(false);
 
-            notify("Wrong credentials");
+            notify("New User Created");
           }
           if (res.message === "Error") {
             setLoading(false);
@@ -66,31 +69,7 @@ const DLogin = () => {
             notify("Something went Wrong, Please Try Again");
           }
         });
-      } else if (placement === "Doctor") {
-        let data = {
-          ...formvalue,
-          docID: formvalue.ID,
-        };
-        console.log(data);
-        dispatch(DoctorLogin(data)).then((res) => {
-          if (res.message === "Successful") {
-            notify("Login Successful");
-            setLoading(false);
-
-            return navigate("/dashboard");
-          }
-          if (res.message === "Wrong credentials") {
-            setLoading(false);
-
-            notify("Wrong credentials");
-          }
-          if (res.message === "Error") {
-            setLoading(false);
-
-            notify("Something went Wrong, Please Try Again");
-          }
-        });
-      } else if (placement === "Admin") {
+      }else if (placement === "Admin") {
         let data = {
           ...formvalue,
           adminID: formvalue.ID,
@@ -157,12 +136,11 @@ const DLogin = () => {
       <ToastContainer />
 
       <div className="mainLoginPage">
-        <div className="leftside">
-          <img src={banner} alt="banner" />
-        </div>
-        <div className="rightside">
-          <h1>Login</h1>
-          <div>
+
+      <div className="rightside">
+          <h1>Signup</h1>
+          <h3>Only For Patients</h3>
+          {/* <div>
             <Radio.Group
               value={placement}
               onChange={placementChange}
@@ -178,13 +156,13 @@ const DLogin = () => {
                 Admin
               </Radio.Button>
             </Radio.Group>
-          </div>
+          </div> */}
           <div className="Profileimg">
             <img src={admin} alt="profile" />
           </div>
           <div>
-            <p>ID - 100</p>
-            <p>Password - masai</p>
+            {/* <p>ID - 100</p>
+            <p>Password - masai</p> */}
             <form onSubmit={HandleSubmit}>
               <h3>{placement} ID</h3>
               <input
@@ -194,6 +172,18 @@ const DLogin = () => {
                 onChange={Handlechange}
                 required
               />
+
+              <h3>{placement} Name</h3>
+              <input
+                type="text"
+                name="name"
+                value={formvalue.name}
+                onChange={Handlechange}
+                required
+              />
+
+
+
               <h3>Password</h3>
               <input
                 type="password"
@@ -202,18 +192,17 @@ const DLogin = () => {
                 onChange={Handlechange}
                 required
               />
+
+              <h3>Confirm Password</h3>
+              <input
+                type="password"
+                name="finalPass"
+                value={formvalue.finalPass}
+                onChange={Handlechange}
+                required
+              />
               <button type="submit">{Loading ? "Loading..." : "Submit"}</button>
-              {/* Link to SignUp page */}
-              {(placement === 'Patient') ? <h3>Not Registered? <Link to='/signup'>Signup</Link></h3>  : <h3></h3>}
-              <p style={{ marginTop: "10px" }}>
-                Forget Password?{" "}
-                <span
-                  style={{ color: "blue", cursor: "pointer" }}
-                  onClick={showDrawer}
-                >
-                  Get it on Email !
-                </span>
-              </p>
+              <h3>Already Registered? <Link to='/'>Log In</Link></h3>
 
               {/* ********************************************************* */}
               <Drawer
@@ -233,11 +222,10 @@ const DLogin = () => {
                   >
                     <option value="">User Type</option>
                     <option value="patient">Patient</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="admin">Admin</option>
+                    {/* <option value="doctor">Doctor</option>
+                    <option value="admin">Admin</option> */}
                   </select>
                 </div>
-
                 <div>
                   <label style={{ display: "block", fontSize: "18px" }}>
                     Enter Email
@@ -283,9 +271,14 @@ const DLogin = () => {
             </form>
           </div>
         </div>
+
+        <div className="leftside">
+          <img src={banner} alt="banner" />
+        </div>
+        
       </div>
     </>
   );
 };
 
-export default DLogin;
+export default DSignup;
