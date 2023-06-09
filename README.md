@@ -40,14 +40,6 @@ Hospital management system is a website which can control all the management rel
 - **Axios**
 - **Ant-Designs**
 
-**Server:**
-
-- **Node Js**
-- **Mongo DB**
-- **Express Js**
-- **JWT**
-- **Nodemailer**
-
 ## Credentials
 
 ID - 100
